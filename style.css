@@ -97,3 +97,28 @@ img {
   background-color: #333;
 }
 
+#comic {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+#comic img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0%;
+ 
+}
+
+#comic p {
+  color: #333;
+  font-size: 18px;
+  text-align: center;
+}
+#comic * {
+  font-size: 14px;
+  padding: 0.5rem;
+}
+
+
+
