@@ -18,17 +18,37 @@ async function insertComic() {
       const resp1 = await fetch(urlToGetComic);
       const data = await resp1.json();
   
-      const event = new Date(Date.UTC(data.year, data.month, data.day));
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      document.getElementById('comic').innerHTML = `
-        <img src="${data.img}" alt="${data.alt}">
-        <p>${data.title}</p>
-        <p>${event.toLocaleDateString('en-US', options)}</p>
-      `;
+      const comicSection = document.getElementById('comic');
+      
+      // Call a separate function to update the DOM with the comic data
+      updateComicDOM(comicSection, data);
+        
     } catch (error) {
       console.log('An error occurred:', error);
     }
   }
   
-  insertComic();
+  function updateComicDOM(comicSection, data) {
+    // Create the elements you want to add
+    const comicImage = document.createElement('img');
+    comicImage.src = data.img;
+    comicImage.alt = data.alt;
+    comicImage.style.width = '30%';
+  
+    const titleParagraph = document.createElement('p');
+    titleParagraph.textContent = data.title;
+  
+    const dateParagraph = document.createElement('p');
+    const event = new Date(Date.UTC(data.year, data.month, data.day));
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateParagraph.textContent = event.toLocaleDateString("en-US", options);
+  
+    // Add the elements to the section
+    comicSection.appendChild(comicImage);
+    comicSection.appendChild(titleParagraph);
+    comicSection.appendChild(dateParagraph);
+  }
+  
+// Call the function after the page loads
+window.addEventListener('load', insertComic);
   
