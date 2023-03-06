@@ -5,6 +5,7 @@
     "build": "webpack"
   },
   "devDependencies": {
+    "rollup": "^3.18.0",
     "terser-webpack-plugin": "^5.3.6",
     "ts-loader": "^9.4.2",
     "webpack": "^5.75.0",
