@@ -1,8 +1,8 @@
 async function insertComic() {
-    const getURL = (url, queries) => {
+    const getURL = (url: string, queries: {[key: string]: string}) => {
       const urlSchema = new URL(url);
       const params = new URLSearchParams(queries);
-      urlSchema.search = params;
+      urlSchema.search = params.toString();
       return urlSchema;
     };
   
@@ -28,7 +28,9 @@ async function insertComic() {
     }
   }
   
-  function updateComicDOM(comicSection, data) {
+  function updateComicDOM(comicSection: HTMLElement | null, data: {img: string, alt: string, title: string, year: number, month: number, day: number}) {
+    if (!comicSection) return;
+  
     // Create the elements you want to add
     const comicImage = document.createElement('img');
     comicImage.src = data.img;
@@ -39,9 +41,8 @@ async function insertComic() {
     titleParagraph.textContent = data.title;
   
     const dateParagraph = document.createElement('p');
-    const event = new Date(Date.UTC(data.year, data.month, data.day));
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    dateParagraph.textContent = event.toLocaleDateString("en-US", options);
+    const event = new Date(Date.UTC(data.year, data.month - 1, data.day));
+    dateParagraph.textContent = event.toLocaleDateString("en-US", { weekday: undefined, year: 'numeric', month: 'long', day: 'numeric' });
   
     // Add the elements to the section
     comicSection.appendChild(comicImage);
@@ -49,6 +50,6 @@ async function insertComic() {
     comicSection.appendChild(dateParagraph);
   }
   
-// Call the function after the page loads
-window.addEventListener('load', insertComic);
+  // Call the function after the page loads
+  window.addEventListener('load', insertComic);
   
